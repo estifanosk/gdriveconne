@@ -1,0 +1,12 @@
+mongohost: localhost
+mongoport: 27017
+mongodb: mydb
+
+applicationConnectors:
+        -type: http
+        # The port the application will listen on
+        port:80
+adminConnectors:
+        -type:http
+        # The admin port
+        port:81
