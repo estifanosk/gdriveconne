@@ -1,5 +1,6 @@
 package com.gdriveconnect;;
 
+import com.gdriveconnect.resources.DriveResource;
 import net.vz.mongodb.jackson.JacksonDBCollection;
 
 import com.mongodb.DB;
@@ -42,5 +43,6 @@ public class ConnectService extends Service<ConnectConfiguration> {
         //environment.addResource(new BlogResource(blogs));
         //environment.addResource(new IndexResource(blogs));
         environment.addResource(new ConnectResource());
+        environment.addResource(new DriveResource());
     }
 }
