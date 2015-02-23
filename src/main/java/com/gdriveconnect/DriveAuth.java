@@ -33,6 +33,7 @@ public class DriveAuth {
     //       "token_uri": "https://accounts.google.com/o/oauth2/token"
     //     }
     //   }
+
     private static final String CLIENTSECRETS_LOCATION = "client_secrets.json";
 
     private static final String CLIENT_ID = "26488588386-46ar9p9pcjvabnucje5glmgscoevgn9s.apps.googleusercontent.com";
@@ -220,7 +221,7 @@ public class DriveAuth {
 
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                 httpTransport, jsonFactory, CLIENT_ID, CLIENT_SECRET, SCOPES)
-                .setAccessType("online")
+                .setAccessType("offline")
                 .setApprovalPrompt("auto").build();
 
         String url = flow.newAuthorizationUrl().setRedirectUri(REDIRECT_URI).build();
