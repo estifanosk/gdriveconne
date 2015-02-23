@@ -151,14 +151,29 @@ public class DriveAuth {
      */
     static GoogleAuthorizationCodeFlow getFlow() throws IOException {
         if (flow == null) {
+            /*
             HttpTransport httpTransport = new NetHttpTransport();
             JacksonFactory jsonFactory = new JacksonFactory();
             Reader clientSecretReader = new InputStreamReader(DriveAuth.class.getResourceAsStream(CLIENTSECRETS_LOCATION));
             GoogleClientSecrets clientSecrets =
                     GoogleClientSecrets.load(jsonFactory,clientSecretReader);
+
+
             flow =
                     new GoogleAuthorizationCodeFlow.Builder(httpTransport, jsonFactory, clientSecrets, SCOPES)
                             .setAccessType("offline").setApprovalPrompt("force").build();
+                    */
+
+            HttpTransport httpTransport = new NetHttpTransport();
+            JsonFactory jsonFactory = new JacksonFactory();
+
+            GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+                    httpTransport, jsonFactory, CLIENT_ID, CLIENT_SECRET, SCOPES)
+                    .setAccessType("offline")
+                    .setApprovalPrompt("auto").build();
+
+            return flow;
+
         }
         return flow;
     }
@@ -216,13 +231,7 @@ public class DriveAuth {
      */
     public static String newAuthUrl() throws  Exception {
 
-        HttpTransport httpTransport = new NetHttpTransport();
-        JsonFactory jsonFactory = new JacksonFactory();
-
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                httpTransport, jsonFactory, CLIENT_ID, CLIENT_SECRET, SCOPES)
-                .setAccessType("offline")
-                .setApprovalPrompt("auto").build();
+        GoogleAuthorizationCodeFlow flow = getFlow();
 
         String url = flow.newAuthorizationUrl().setRedirectUri(REDIRECT_URI).build();
 
