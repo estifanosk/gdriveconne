@@ -41,11 +41,13 @@
           <artifactId>google-api-services-oauth2</artifactId>
           <version>v1-rev88-1.19.1</version>
       </dependency>
+
       <dependency>
-          <groupId>com.google.api.client</groupId>
-          <artifactId>google-api-client</artifactId>
-          <version>1.4.0-alpha</version>
+          <groupId>com.google.http-client</groupId>
+          <artifactId>google-http-client</artifactId>
+          <version>1.18.0-rc</version>
       </dependency>
+
       <dependency>
           <groupId>org.apache.logging.log4j</groupId>
           <artifactId>log4j-api</artifactId>

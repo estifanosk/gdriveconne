@@ -29,14 +29,14 @@ public class DriveResource {
                           @QueryParam("state") String state
 ) {
 
-        log.debug("code : " + code);
-        log.debug("state: " + state);
+        log.info("code : " + code);
+        log.info("state: " + state);
 
         try {
 
-            Credential credential =  DriveAuth.getCredentials(code,state);
-            log.debug("access token : " + credential.getAccessToken());
-            log.debug(("refresh token:") + credential.getRefreshToken());
+            Credential credential =  DriveAuth.retrieve(code);
+            log.info("access token : " + credential.getAccessToken());
+            log.info(("refresh token:") + credential.getRefreshToken());
 
         }
         catch ( Exception ex){

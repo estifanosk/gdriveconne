@@ -1,21 +1,15 @@
 package com.gdriveconnect;
 
 import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeRequestUrl;
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
+import com.google.api.client.googleapis.auth.oauth2.*;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson.JacksonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.oauth2.Oauth2;
 import com.google.api.services.oauth2.model.Userinfoplus;
 
-
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,7 +28,7 @@ public class DriveAuth {
     //     }
     //   }
 
-    private static final String CLIENTSECRETS_LOCATION = "client_secrets.json";
+   // private static final String CLIENTSECRETS_LOCATION = "client_secrets.json";
 
     private static final String CLIENT_ID = "26488588386-46ar9p9pcjvabnucje5glmgscoevgn9s.apps.googleusercontent.com";
 
@@ -172,6 +166,7 @@ public class DriveAuth {
                     .setAccessType("offline")
                     .setApprovalPrompt("auto").build();
 
+
             return flow;
 
         }
@@ -229,11 +224,11 @@ public class DriveAuth {
      * @return
      * @throws Exception
      */
-    public static String newAuthUrl() throws  Exception {
+    public static String newAuthUrl(String state) throws  Exception {
 
         GoogleAuthorizationCodeFlow flow = getFlow();
 
-        String url = flow.newAuthorizationUrl().setRedirectUri(REDIRECT_URI).build();
+        String url = flow.newAuthorizationUrl().setRedirectUri(REDIRECT_URI).setState(state).build();
 
         return  url;
     }
@@ -303,6 +298,31 @@ public class DriveAuth {
         // No refresh token has been retrieved.
         String authorizationUrl = getAuthorizationUrl(emailAddress, state);
         throw new NoRefreshTokenException(authorizationUrl);
+    }
+
+    /**
+     * Retrieves a new access token by exchanging the given code with OAuth2
+     * end-points.
+     * @param code Exchange code.
+     * @return A credential object.
+     */
+    public static Credential retrieve(String code) {
+        HttpTransport transport = new NetHttpTransport();
+        JsonFactory jsonFactory = new JacksonFactory();
+
+        try {
+            GoogleTokenResponse response = new GoogleAuthorizationCodeTokenRequest(
+                    transport,
+                    jsonFactory,
+                    CLIENT_ID,
+                    CLIENT_SECRET,
+                    code,
+                    REDIRECT_URI).execute();
+            return new GoogleCredential().setAccessToken(response.getAccessToken());
+        } catch (IOException e) {
+            new RuntimeException("An unknown problem occured while retrieving token");
+        }
+        return null;
     }
 
 }

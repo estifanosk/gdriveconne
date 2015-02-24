@@ -28,7 +28,7 @@ public class ConnectResource {
         URI uri = UriBuilder.fromUri("http://news.bbc.com").build();
 
         try {
-            uri = UriBuilder.fromUri(DriveAuth.newAuthUrl()).build();
+            uri = UriBuilder.fromUri(DriveAuth.newAuthUrl("connectstate")).build();
         }
         catch ( Exception ex)
         {
