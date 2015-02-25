@@ -5,8 +5,8 @@ import java.util.Date;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
-import net.vz.mongodb.jackson.Id;
-import net.vz.mongodb.jackson.ObjectId;
+import org.mongojack.Id;
+import org.mongojack.ObjectId;
 
 public class Blog {
 

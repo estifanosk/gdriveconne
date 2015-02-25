@@ -12,11 +12,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import net.vz.mongodb.jackson.DBCursor;
-import net.vz.mongodb.jackson.JacksonDBCollection;
-
 import com.gdriveconnect.representations.Blog;
 import com.yammer.metrics.annotation.Timed;
+import org.mongojack.JacksonDBCollection;
+import org.mongojack.DBCursor;
 
 @Path("/blogs")
 @Produces(value = MediaType.APPLICATION_JSON)

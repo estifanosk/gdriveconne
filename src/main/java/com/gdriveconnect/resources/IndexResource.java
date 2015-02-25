@@ -4,8 +4,8 @@ import com.gdriveconnect.representations.Blog;
 import com.gdriveconnect.views.IndexView;
 import com.yammer.dropwizard.views.View;
 import com.yammer.metrics.annotation.Timed;
-import net.vz.mongodb.jackson.DBCursor;
-import net.vz.mongodb.jackson.JacksonDBCollection;
+import org.mongojack.DBCursor;
+import org.mongojack.JacksonDBCollection;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

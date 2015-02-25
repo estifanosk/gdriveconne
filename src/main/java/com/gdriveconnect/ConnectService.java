@@ -1,19 +1,17 @@
-package com.gdriveconnect;;
+package com.gdriveconnect;
 
+import com.gdriveconnect.representations.User;
+import com.gdriveconnect.resources.ConnectResource;
 import com.gdriveconnect.resources.DriveResource;
-import net.vz.mongodb.jackson.JacksonDBCollection;
-
 import com.mongodb.DB;
 import com.mongodb.Mongo;
-import com.gdriveconnect.representations.Blog;
-import com.gdriveconnect.resources.BlogResource;
-import com.gdriveconnect.resources.IndexResource;
-import com.gdriveconnect.resources.ConnectResource;
 import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.assets.AssetsBundle;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
 import com.yammer.dropwizard.views.ViewBundle;
+import org.mongojack.JacksonDBCollection;
+
 
 public class ConnectService extends Service<ConnectConfiguration> {
 
@@ -34,7 +32,7 @@ public class ConnectService extends Service<ConnectConfiguration> {
         Mongo mongo = new Mongo(configuration.mongohost, configuration.mongoport);
         DB db = mongo.getDB(configuration.mongodb);
         
-      //  JacksonDBCollection<Blog, String> blogs = JacksonDBCollection.wrap(db.getCollection("blogs"), Blog.class, String.class);
+        JacksonDBCollection<User, String> users = JacksonDBCollection.wrap(db.getCollection("users"), User.class, String.class);
         MongoManaged mongoManaged = new MongoManaged(mongo);
         environment.manage(mongoManaged);
         
@@ -42,7 +40,7 @@ public class ConnectService extends Service<ConnectConfiguration> {
         
         //environment.addResource(new BlogResource(blogs));
         //environment.addResource(new IndexResource(blogs));
-        environment.addResource(new ConnectResource());
-        environment.addResource(new DriveResource());
+        environment.addResource(new ConnectResource(users));
+        environment.addResource(new DriveResource(users));
     }
 }
