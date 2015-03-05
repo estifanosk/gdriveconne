@@ -1,7 +1,6 @@
 package com.gdriveconnect.resources;
 
 import com.gdriveconnect.DriveAuth;
-import com.gdriveconnect.representations.BlogPost;
 import com.gdriveconnect.representations.User;
 import com.yammer.metrics.annotation.Timed;
 import org.apache.log4j.Logger;
@@ -21,11 +20,11 @@ import java.net.URI;
 @Path("/connect")
 public class ConnectResource {
 
-    private JacksonDBCollection<BlogPost, String> collection;
+    private JacksonDBCollection<User, String> collection;
 
     static Logger log = Logger.getLogger(DriveResource.class.getName());
 
-    public ConnectResource(JacksonDBCollection<BlogPost,String>  coll) {
+    public ConnectResource(JacksonDBCollection<User,String>  coll) {
         this.collection = coll;
     }
 
@@ -36,21 +35,21 @@ public class ConnectResource {
 
         URI uri = UriBuilder.fromUri("http://news.bbc.com").build();
 
-        BlogPost user = new BlogPost();
-        //user.setName("Estifanos");
+        User user = new User();
+        user.setName("Estifanos");
 
-        WriteResult<BlogPost, String> result = collection.insert(user);
+        WriteResult<User, String> result = collection.insert(user);
         String id = result.getSavedId();
 
         log.info("\n state : " + id );
 
-        BlogPost foundUser = collection.findOneById(id);
-     //   foundUser.setDriveAccessToken("atoken");
-       // foundUser.setDriveRefreshToken("rtoken");
-      //  log.info(foundUser.getId());
+        User foundUser = collection.findOneById(id);
+        foundUser.setDriveAccessToken("atoken");
+        foundUser.setDriveRefreshToken("rtoken");
+        log.info(foundUser.getId());
 
-     //   collection.updateById(id,foundUser);
-
+        collection.updateById(id,foundUser);
+        foundUser = collection.findOneById(id);
 
         try {
             uri = UriBuilder.fromUri(DriveAuth.newAuthUrl(id)).build();

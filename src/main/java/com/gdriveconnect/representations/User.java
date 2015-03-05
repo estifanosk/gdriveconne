@@ -29,10 +29,12 @@ public class User {
 
     private String name;
 
+    @JsonProperty("name")
     public void setName(String name) {
         this.name=name;
     }
 
+    @JsonProperty("name")
     public String getName() { return this.name;}
 
 

@@ -1,6 +1,6 @@
 package com.gdriveconnect;
 
-import com.gdriveconnect.representations.BlogPost;
+import com.gdriveconnect.representations.User;
 import com.gdriveconnect.resources.ConnectResource;
 import com.gdriveconnect.resources.DriveResource;
 import com.mongodb.DB;
@@ -32,7 +32,7 @@ public class ConnectService extends Service<ConnectConfiguration> {
         Mongo mongo = new Mongo(configuration.mongohost, configuration.mongoport);
         DB db = mongo.getDB(configuration.mongodb);
         
-        JacksonDBCollection<BlogPost, String> users = JacksonDBCollection.wrap(db.getCollection("users"), BlogPost.class, String.class);
+        JacksonDBCollection<User, String> users = JacksonDBCollection.wrap(db.getCollection("users"), User.class, String.class);
         MongoManaged mongoManaged = new MongoManaged(mongo);
         environment.manage(mongoManaged);
         
