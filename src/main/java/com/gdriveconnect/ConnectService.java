@@ -41,5 +41,6 @@ public class ConnectService extends Service<ConnectConfiguration> {
         //environment.addResource(new BlogResource(blogs));
         //environment.addResource(new IndexResource(blogs));
         environment.addResource(new ConnectResource(users));
+        environment.addResource(new DriveResource(users));
     }
 }
