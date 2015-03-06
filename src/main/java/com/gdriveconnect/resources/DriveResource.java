@@ -30,14 +30,10 @@ public class DriveResource {
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
     @Timed
     public Response index(@QueryParam("code") String code,
-                          @QueryParam("state") String state
-) {
+                          @QueryParam("state") String state)  {
 
         log.info("code : " + code);
         log.info("state: " + state);
-
-
-
 
         try {
 
@@ -46,13 +42,16 @@ public class DriveResource {
             User foundUser = collection.findOneById(state);
 
             if (foundUser !=null) {
+
+                foundUser.setDriveAuthCode(code);
                 foundUser.setDriveAccessToken(credential.getAccessToken());
                 foundUser.setDriveRefreshToken(credential.getRefreshToken());
+
+                collection.updateById(state,foundUser);
             }
 
             log.info("\n access token : " + credential.getAccessToken());
             log.info(("\n refresh token:") + credential.getRefreshToken());
-
         }
         catch ( Exception ex){
             log.error("Error getting credential:" + ex.getMessage());

@@ -11,7 +11,6 @@ import org.mongojack.ObjectId;
 
 public class User {
 
-
     private String id;
 
     @ObjectId
@@ -28,7 +27,6 @@ public class User {
 
 
     private String name;
-
     @JsonProperty("name")
     public void setName(String name) {
         this.name=name;
@@ -55,21 +53,17 @@ public class User {
 
     }
 
-    /*
-    @JsonCreator
-    public User(@Id @ObjectId id) {
-        this.id = id;
-    }
-      */
-
     public String getDriveAuthCode() {
         return driveAuthCode;
+    }
+
+    public void setDriveAuthCode(String driveAuthCode) {
+        this.driveAuthCode = driveAuthCode;
     }
 
     public String getDriveAccessToken() {
         return driveAccessToken;
     }
-
 
     public void setDriveAccessToken(String driveAccessToken) {
         this.driveAccessToken = driveAccessToken;

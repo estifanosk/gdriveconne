@@ -31,16 +31,10 @@ public class ConnectResource {
     @GET
     @Consumes({MediaType.APPLICATION_FORM_URLENCODED})
     @Timed
-    public Response index() {
+    public Response index() throws  Exception {
 
+        /*
         URI uri = UriBuilder.fromUri("http://news.bbc.com").build();
-
-        User user = new User();
-        user.setName("Estifanos");
-
-        WriteResult<User, String> result = collection.insert(user);
-        String id = result.getSavedId();
-
         log.info("\n state : " + id );
 
         User foundUser = collection.findOneById(id);
@@ -48,17 +42,16 @@ public class ConnectResource {
         foundUser.setDriveRefreshToken("rtoken");
         log.info(foundUser.getId());
 
-        collection.updateById(id,foundUser);
-        foundUser = collection.findOneById(id);
+        collection.updateById(state,foundUser);
+        foundUser = collection.findOneById(state);
+        */
 
-        try {
-            uri = UriBuilder.fromUri(DriveAuth.newAuthUrl(id)).build();
-        }
-        catch ( Exception ex)
-        {
-            System.console().printf("%s",ex.getMessage());
-        }
+        User user = new User();
+        WriteResult<User, String> result = collection.insert(user);
+        String state = result.getSavedId();
 
+        URI uri = UriBuilder.fromUri(DriveAuth.newAuthUrl(state)).build();
         return Response.seeOther(uri).build();
+
     }
 }
