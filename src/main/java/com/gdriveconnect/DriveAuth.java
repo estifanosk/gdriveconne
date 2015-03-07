@@ -306,7 +306,7 @@ public class DriveAuth {
      * @param code Exchange code.
      * @return A credential object.
      */
-    public static Credential retrieve(String code) {
+    public static GoogleCredential retrieve(String code) {
         HttpTransport transport = new NetHttpTransport();
         JsonFactory jsonFactory = new JacksonFactory();
 

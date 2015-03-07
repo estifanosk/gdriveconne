@@ -45,6 +45,7 @@ public class User {
     @NotBlank
     private String driveRefreshToken;
 
+    private String driveResourceId;
 
     private final Date publishedOn = new Date();
 
@@ -75,6 +76,14 @@ public class User {
 
     public void setDriveRefreshToken(String driveRefreshToken) {
         this.driveRefreshToken = driveRefreshToken;
+    }
+
+    public String getDriveResourceId() {
+        return driveRefreshToken;
+    }
+
+    public void setDriveResourceId(String resourceId) {
+        this.driveResourceId = resourceId;
     }
 
 
