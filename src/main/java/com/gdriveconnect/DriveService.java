@@ -12,6 +12,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.Channel;
 import org.apache.log4j.Logger;
+import com.gdriveconnect.representations.User;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -22,7 +23,7 @@ public class DriveService {
     static Logger log = Logger.getLogger(
             DriveService.class.getName());
 
-    private static final String NOTIFICATION_URL = "https://my-host.com/notification";
+    private static final String NOTIFICATION_URL = "http://ec2-52-10-13-41.us-west-2.compute.amazonaws.com:8080/drive-notification";
 
     /**
      * Build a Drive service object.
@@ -38,22 +39,21 @@ public class DriveService {
                 .build();
     }
 
-    public static void setupNotificationChannel(Drive drive , String[] resourceEndPoints) {
+    public static void watchFile(String resourceId, String accessToken) {
 
-        for( String resourceEndPoint : resourceEndPoints) {
+        Drive drive = buildService(new GoogleCredential().setAccessToken(accessToken));
 
-            String subscriptionId = UUID.randomUUID().toString();
-            Channel request = new Channel()
-                    .setId(subscriptionId)
-                    .setType("web_hook")
-                    .setAddress(NOTIFICATION_URL);
+        String subscriptionId = UUID.randomUUID().toString();
 
-            try {
-                drive.changes().watch(request).execute();
-            }
-            catch (IOException ex){
-                log.error("Error : unable to setup channel for end point : " + resourceEndPoint );
-            }
+        Channel request = new Channel()
+                .setId(subscriptionId)
+                .setType("web_hook")
+                .setAddress(NOTIFICATION_URL);
+        try {
+            drive.files().watch(resourceId,request).execute();
+        }
+        catch (IOException ex){
+            log.error("Error : unable to setup channel for end point : " + resourceId );
         }
     }
 
