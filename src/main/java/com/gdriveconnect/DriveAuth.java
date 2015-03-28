@@ -34,7 +34,7 @@ public class DriveAuth {
 
     private static final String CLIENT_SECRET = "7NvBCpHWEEA-tMyH8VnkxluU";
 
-    private static final String REDIRECT_URI = "http://ec2-52-10-13-41.us-west-2.compute.amazonaws.com:8080/drivecallback";
+    private static final String REDIRECT_URI = "http://www.concur-gdrive-connect.com:8080/drivecallback";
 
     private static final List<String> SCOPES = Arrays.asList(
             "https://www.googleapis.com/auth/drive.file",

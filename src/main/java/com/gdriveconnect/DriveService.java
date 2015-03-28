@@ -23,7 +23,7 @@ public class DriveService {
     static Logger log = Logger.getLogger(
             DriveService.class.getName());
 
-    private static final String NOTIFICATION_URL = "http://ec2-52-10-13-41.us-west-2.compute.amazonaws.com:8080/drive-notification";
+    private static final String NOTIFICATION_URL = "http://www.concur-gdrive-connect.com:8080/drive-notification";
 
     /**
      * Build a Drive service object.
